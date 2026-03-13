@@ -6,9 +6,9 @@
 
 | Champ | Valeur |
 |---|---|
-| **Nom(s) des élèves** | *(à compléter)* |
-| **Numéro de groupe** | *(à compléter)* |
-| **Encadrant** | *(à compléter)* |
+| **Nom** | *Marif Taha* |
+| **Numéro de groupe** | *A2-A* |
+| **Encadrant** | *Emmanuel DELLANDREA* |
 | **Titre du TD** | Programmation orientée objet en Python — Gestion d'une bibliothèque |
 
 ---
