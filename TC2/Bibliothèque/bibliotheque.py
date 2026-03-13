@@ -9,20 +9,17 @@ class Bibliotheque:
     """Gère le fond documentaire, les lecteurs, les bibliothécaires et les emprunts."""
 
     def __init__(self, nom, conservateur=None):
-        """
-        :param nom: Nom de la bibliothèque
-        :param conservateur: Instance de Conservateur (optionnel)
-        """
+
         self._nom = nom
         self._conservateur = conservateur
         self._lecteurs = []
         self._livres = []
         self._bibliothecaires = []
-        self._emprunts = []   # historique complet (y compris retournés)
+        self._emprunts = [] 
 
     # ------------------------------------------------------------------ #
     #  Propriétés                                                          #
-    # ------------------------------------------------------------------ #
+    # ---------------   --------------------------------------------------- #
     @property
     def nom(self):
         return self._nom
