@@ -9,13 +9,13 @@
 | **Nom** | *Marif Taha* |
 | **Numéro de groupe** | *A2-A* |
 | **Encadrant** | *Emmanuel DELLANDREA* |
-| **Titre du TD** | Programmation orientée objet en Python — Gestion d'une bibliothèque |
+| **Titre du TD** | Programmation orientée objet — Gestion d'une bibliothèque |
 
 ---
 
 ## Diagramme de classes UML
 
-Le diagramme ci-dessous présente l'ensemble des classes de l'application, leurs attributs (préfixés `_` pour les attributs privés), leurs méthodes (préfixées `+` pour publiques, `-` pour privées) ainsi que les relations entre classes avec leurs cardinalités.
+Le diagramme ci-dessous présente l'ensemble des classes de l'application, leurs attributs , leurs méthodes (préfixées `+` pour publiques, `-` pour privées) ainsi que les relations entre classes avec leurs cardinalités.
 
 ```
 ┌──────────────────────────────────────────────┐

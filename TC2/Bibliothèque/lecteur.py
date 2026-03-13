@@ -6,7 +6,7 @@ class Lecteur:
         self._prenom = prenom
         self._adresse = adresse
         self._numero = numero
-        self._emprunts = []  # liste d'objets Emprunt en cours
+        self._emprunts = []  
 
     @property
     def nom(self):

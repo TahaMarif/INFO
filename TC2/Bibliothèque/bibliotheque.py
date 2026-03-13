@@ -75,7 +75,7 @@ class Bibliotheque:
             print(l)
 
     # ------------------------------------------------------------------ #
-    #  Gestion des livres                                                  #
+    #  Gestion des livres                                                  
     # ------------------------------------------------------------------ #
     def ajout_livre(self, titre, auteur, numero, nb_exemplaires):
         """Ajoute un livre. Affiche un message si le numéro existe déjà."""
@@ -119,7 +119,7 @@ class Bibliotheque:
             print(l)
 
     # ------------------------------------------------------------------ #
-    #  Gestion des emprunts                                                #
+    #  Gestion des emprunts                                                
     # ------------------------------------------------------------------ #
     def emprunt_livre(self, numero_lecteur, numero_livre):
         """
@@ -190,7 +190,7 @@ class Bibliotheque:
             print(e)
 
     # ------------------------------------------------------------------ #
-    #  Gestion des bibliothécaires                                         #
+    #  Gestion des bibliothécaires                                         
     # ------------------------------------------------------------------ #
     def ajout_bibliothecaire(self, nom, prenom, numero):
         """Ajoute un bibliothécaire."""
@@ -221,7 +221,7 @@ class Bibliotheque:
             print(f"  {b}")
 
     # ------------------------------------------------------------------ #
-    #  Méthodes internes                                                   #
+    #  Méthodes internes                                                   
     # ------------------------------------------------------------------ #
     def _trouver_lecteur_par_numero(self, numero):
         for l in self._lecteurs:
