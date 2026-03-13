@@ -1,4 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+Gestion d'une bibliothèque en Python — Programmation Orientée Objet
+Toutes les classes et le programme principal sont réunis dans ce fichier.
+"""
+
 from datetime import date
+
+
+# ======================================================================
+#  Classe Bibliothecaire
+# ======================================================================
 class Bibliothecaire:
     """Représente un bibliothécaire de la bibliothèque."""
 
@@ -23,7 +34,9 @@ class Bibliothecaire:
         return f"Bibliothécaire n°{self._numero} | {self._prenom} {self._nom}"
 
 
-
+# ======================================================================
+#  Classe Conservateur
+# ======================================================================
 class Conservateur(Bibliothecaire):
     """Dirige la bibliothèque. Hérite de Bibliothécaire."""
 
@@ -34,6 +47,9 @@ class Conservateur(Bibliothecaire):
         return f"Conservateur n°{self._numero} | {self._prenom} {self._nom}"
 
 
+# ======================================================================
+#  Classe Emprunt
+# ======================================================================
 class Emprunt:
     """Représente l'emprunt d'un livre par un lecteur."""
 
@@ -71,6 +87,11 @@ class Emprunt:
                 f"Lecteur : {self._lecteur.prenom} {self._lecteur.nom} "
                 f"(n°{self._lecteur.numero}) | "
                 f"Emprunté le : {self._date_emprunt} | Statut : {statut}")
+
+
+# ======================================================================
+#  Classe Lecteur
+# ======================================================================
 class Lecteur:
     """Représente un lecteur inscrit dans la bibliothèque."""
 
@@ -79,7 +100,7 @@ class Lecteur:
         self._prenom = prenom
         self._adresse = adresse
         self._numero = numero
-        self._emprunts = []  
+        self._emprunts = []
 
     @property
     def nom(self):
@@ -120,6 +141,10 @@ class Lecteur:
         return (f"Lecteur n°{self._numero} | {self._prenom} {self._nom} | "
                 f"{self._adresse} | Emprunts en cours : {nb} ({livres})")
 
+
+# ======================================================================
+#  Classe Livre
+# ======================================================================
 class Livre:
     """Représente un livre du fond documentaire."""
 
@@ -127,8 +152,8 @@ class Livre:
         self._titre = titre
         self._auteur = auteur
         self._numero = numero
-        self._nb_exemplaires = nb_exemplaires   # total acheté
-        self._nb_empruntes = 0                  # actuellement empruntés
+        self._nb_exemplaires = nb_exemplaires
+        self._nb_empruntes = 0
 
     @property
     def titre(self):
@@ -182,21 +207,22 @@ class Livre:
                 f"Exemplaires : {self._nb_exemplaires} total, "
                 f"{self.nb_disponibles} disponible(s)")
 
+
+# ======================================================================
+#  Classe Bibliotheque
+# ======================================================================
 class Bibliotheque:
     """Gère le fond documentaire, les lecteurs, les bibliothécaires et les emprunts."""
 
     def __init__(self, nom, conservateur=None):
-
         self._nom = nom
         self._conservateur = conservateur
         self._lecteurs = []
         self._livres = []
         self._bibliothecaires = []
-        self._emprunts = [] 
+        self._emprunts = []
 
-    # ------------------------------------------------------------------ #
-    #  Propriétés                                                          #
-    # ---------------   --------------------------------------------------- #
+    # --- Propriétés ---
     @property
     def nom(self):
         return self._nom
@@ -209,32 +235,23 @@ class Bibliotheque:
     def conservateur(self, c):
         self._conservateur = c
 
-    # ------------------------------------------------------------------ #
-    #  Gestion des lecteurs                                                #
-    # ------------------------------------------------------------------ #
+    # --- Gestion des lecteurs ---
     def ajout_lecteur(self, nom, prenom, adresse, numero):
-        """Ajoute un lecteur. Affiche un message si le numéro existe déjà."""
         if self._trouver_lecteur_par_numero(numero) is not None:
             print(f"Erreur : un lecteur avec le numéro {numero} existe déjà.")
             return
         self._lecteurs.append(Lecteur(nom, prenom, adresse, numero))
 
     def chercher_lecteur_numero(self, numero):
-        """Retourne le Lecteur correspondant au numéro, ou None."""
         return self._trouver_lecteur_par_numero(numero)
 
     def chercher_lecteur_nom(self, nom, prenom):
-        """Retourne le Lecteur correspondant à (nom, prenom), ou None."""
         for l in self._lecteurs:
             if l.nom == nom and l.prenom == prenom:
                 return l
         return None
 
     def retrait_lecteur(self, numero):
-        """
-        Retire un lecteur s'il n'a plus d'emprunt en cours.
-        Retourne True si réussi, False sinon.
-        """
         lecteur = self._trouver_lecteur_par_numero(numero)
         if lecteur is None:
             print(f"Retrait lecteur : aucun lecteur avec le numéro {numero}.")
@@ -245,39 +262,28 @@ class Bibliotheque:
         return True
 
     def affiche_lecteurs(self):
-        """Affiche tous les lecteurs de la bibliothèque."""
         if not self._lecteurs:
             print("  Aucun lecteur enregistré.")
         for l in self._lecteurs:
             print(l)
 
-    # ------------------------------------------------------------------ #
-    #  Gestion des livres                                                  
-    # ------------------------------------------------------------------ #
+    # --- Gestion des livres ---
     def ajout_livre(self, titre, auteur, numero, nb_exemplaires):
-        """Ajoute un livre. Affiche un message si le numéro existe déjà."""
         if self._trouver_livre_par_numero(numero) is not None:
             print(f"Erreur : un livre avec le numéro {numero} existe déjà.")
             return
         self._livres.append(Livre(titre, auteur, numero, nb_exemplaires))
 
     def chercher_livre_numero(self, numero):
-        """Retourne le Livre correspondant au numéro, ou None."""
         return self._trouver_livre_par_numero(numero)
 
     def chercher_livre_titre(self, titre):
-        """Retourne le premier Livre dont le titre correspond, ou None."""
         for l in self._livres:
             if l.titre == titre:
                 return l
         return None
 
     def retrait_livre(self, numero):
-        """
-        Retire un exemplaire disponible du livre (désherbage/vol).
-        Si le livre n'a plus d'exemplaire, il est retiré du catalogue.
-        Retourne True si réussi, False si aucun exemplaire disponible.
-        """
         livre = self._trouver_livre_par_numero(numero)
         if livre is None:
             print(f"Retrait livre : aucun livre avec le numéro {numero}.")
@@ -289,68 +295,48 @@ class Bibliotheque:
         return True
 
     def affiche_livres(self):
-        """Affiche tous les livres de la bibliothèque."""
         if not self._livres:
             print("  Aucun livre enregistré.")
         for l in self._livres:
             print(l)
 
-    # ------------------------------------------------------------------ #
-    #  Gestion des emprunts                                                
-    # ------------------------------------------------------------------ #
+    # --- Gestion des emprunts ---
     def emprunt_livre(self, numero_lecteur, numero_livre):
-        """
-        Enregistre l'emprunt d'un livre par un lecteur.
-        Vérifie la disponibilité et l'absence de double emprunt.
-        """
         lecteur = self._trouver_lecteur_par_numero(numero_lecteur)
         if lecteur is None:
             print(f"Emprunt impossible : lecteur n°{numero_lecteur} introuvable.")
             return
-
         livre = self._trouver_livre_par_numero(numero_livre)
         if livre is None:
             print(f"Emprunt impossible : livre n°{numero_livre} introuvable.")
             return
-
         if not livre.est_disponible():
-            print(f"Emprunt impossible : aucun exemplaire disponible pour "
-                  f"'{livre.titre}'.")
+            print(f"Emprunt impossible : aucun exemplaire disponible pour '{livre.titre}'.")
             return
-
         if lecteur.a_deja_emprunte(numero_livre):
             print(f"Emprunt impossible : {lecteur.prenom} {lecteur.nom} a déjà "
                   f"emprunté '{livre.titre}'.")
             return
-
         emprunt = Emprunt(livre, lecteur)
         livre.emprunter()
         lecteur.ajouter_emprunt(emprunt)
         self._emprunts.append(emprunt)
-        print(f"Emprunt enregistré : '{livre.titre}' → "
-              f"{lecteur.prenom} {lecteur.nom}")
+        print(f"Emprunt enregistré : '{livre.titre}' → {lecteur.prenom} {lecteur.nom}")
 
     def retour_livre(self, numero_lecteur, numero_livre):
-        """
-        Enregistre le retour d'un livre par un lecteur.
-        Affiche un message si l'emprunt est introuvable.
-        """
         lecteur = self._trouver_lecteur_par_numero(numero_lecteur)
         if lecteur is None:
             print(f"Retour impossible : lecteur n°{numero_lecteur} introuvable.")
             return
-
         emprunt_cible = None
         for e in lecteur.emprunts:
             if e.livre.numero == numero_livre:
                 emprunt_cible = e
                 break
-
         if emprunt_cible is None:
             print(f"Retour impossible : le lecteur n°{numero_lecteur} n'a pas "
                   f"emprunté le livre n°{numero_livre}.")
             return
-
         emprunt_cible.enregistrer_retour()
         emprunt_cible.livre.retourner()
         lecteur.retirer_emprunt(emprunt_cible)
@@ -358,26 +344,20 @@ class Bibliotheque:
               f"{lecteur.prenom} {lecteur.nom}")
 
     def affiche_emprunts(self):
-        """Affiche tous les emprunts (en cours et terminés)."""
-        emprunts_en_cours = [e for e in self._emprunts if e.est_en_cours()]
-        if not emprunts_en_cours and not self._emprunts:
+        if not self._emprunts:
             print("  Aucun emprunt enregistré.")
             return
         for e in self._emprunts:
             print(e)
 
-    # ------------------------------------------------------------------ #
-    #  Gestion des bibliothécaires                                         
-    # ------------------------------------------------------------------ #
+    # --- Gestion des bibliothécaires ---
     def ajout_bibliothecaire(self, nom, prenom, numero):
-        """Ajoute un bibliothécaire."""
         if self._trouver_bibliothecaire(numero) is not None:
             print(f"Erreur : bibliothécaire n°{numero} existe déjà.")
             return
         self._bibliothecaires.append(Bibliothecaire(nom, prenom, numero))
 
     def retrait_bibliothecaire(self, numero):
-        """Retire un bibliothécaire. Retourne True si réussi, False sinon."""
         bib = self._trouver_bibliothecaire(numero)
         if bib is None:
             return False
@@ -385,11 +365,9 @@ class Bibliotheque:
         return True
 
     def chercher_bibliothecaire(self, numero):
-        """Retourne le Bibliothécaire correspondant, ou None."""
         return self._trouver_bibliothecaire(numero)
 
     def affiche_bibliothecaires(self):
-        """Affiche tous les bibliothécaires."""
         if self._conservateur:
             print(f"  Conservateur : {self._conservateur}")
         if not self._bibliothecaires:
@@ -397,9 +375,7 @@ class Bibliotheque:
         for b in self._bibliothecaires:
             print(f"  {b}")
 
-    # ------------------------------------------------------------------ #
-    #  Méthodes internes                                                   
-    # ------------------------------------------------------------------ #
+    # --- Méthodes privées ---
     def _trouver_lecteur_par_numero(self, numero):
         for l in self._lecteurs:
             if l.numero == numero:
@@ -423,3 +399,171 @@ class Bibliotheque:
                 f"Lecteurs : {len(self._lecteurs)} | "
                 f"Livres : {len(self._livres)} | "
                 f"Emprunts totaux : {len(self._emprunts)}")
+
+
+# ======================================================================
+#  Programme principal
+# ======================================================================
+if __name__ == '__main__':
+
+    # Creation d'une bibliotheque
+    b = Bibliotheque('Bibliotheque ECL')
+
+    # Ajout de lecteurs
+    b.ajout_lecteur('Duval','Pierre','rue de la Paix',1)
+    b.ajout_lecteur('Dupond','Laurent','rue de la Gare',2)
+    b.ajout_lecteur('Martin','Marie','rue La Fayette',3)
+    b.ajout_lecteur('Dubois','Sophie','rue du Stade',4)
+
+    # Ajout de livres
+    b.ajout_livre('Le Pere Goriot','Honore de Balzac',101,2)
+    b.ajout_livre('Les Hauts de Hurlevent','Emilie Bronte',102,2)
+    b.ajout_livre('Le Petit Prince','Antoine de Saint Exupery',103,2)
+    b.ajout_livre("L'Etranger",'Albert Camus',104,2)
+
+    # Affichage des lecteurs et des livres
+    print('\n--- Liste des lecteurs :')
+    print('-------------------------------')
+    b.affiche_lecteurs()
+    print('\n--- Liste des livres :')
+    print('-------------------------------')
+    b.affiche_livres()
+
+    # Recherches de lecteurs par numero
+    print('\n--- Recherche de lecteurs :')
+    print('-------------------------------')
+    lect = b.chercher_lecteur_numero(1)
+    if lect != None:
+        print(lect)
+    else:
+        print('Lecteur non trouve')
+
+    lect = b.chercher_lecteur_numero(6)
+    if lect != None:
+        print(lect)
+    else:
+        print('Lecteur non trouve')
+
+    # Recherches de lecteurs par nom
+    lect = b.chercher_lecteur_nom('Martin','Marie')
+    if lect != None:
+        print(lect)
+    else:
+        print('Lecteur non trouve')
+
+    lect = b.chercher_lecteur_nom('Le Grand','Paul')
+    if lect != None:
+        print(lect)
+    else:
+        print('Lecteur non trouve')
+
+    # Recherches de livres par numero
+    print('\n--- Recherche de livres :')
+    print('-------------------------------')
+    livre = b.chercher_livre_numero(101)
+    if livre != None:
+        print('Livre trouve :',livre)
+    else:
+        print('Livre non trouve')
+
+    livre = b.chercher_livre_numero(106)
+    if livre != None:
+        print('Livre trouve :',livre)
+    else:
+        print('Livre non trouve')
+
+    # Recherches de livres par titre
+    livre = b.chercher_livre_titre('Les Hauts de Hurlevent')
+    if livre != None:
+        print('Livre trouve :',livre)
+    else:
+        print('Livre non trouve')
+
+    livre = b.chercher_livre_titre('Madame Bovarie')
+    if livre != None:
+        print('Livre trouve :',livre)
+    else:
+        print('Livre non trouve')
+
+    # Quelques emprunts
+    print('\n--- Quelques emprunts :')
+    print('-------------------------------')
+    b.emprunt_livre(1,101)
+    b.emprunt_livre(1,104)
+    b.emprunt_livre(2,101)
+    b.emprunt_livre(2,105)
+    b.emprunt_livre(3,101)
+    b.emprunt_livre(3,104)
+    b.emprunt_livre(4,102)
+    b.emprunt_livre(4,103)
+
+    # Affichage des emprunts, des lecteurs et des livres
+    print('\n--- Liste des emprunts :')
+    print('-------------------------------')
+    b.affiche_emprunts()
+    print('\n--- Liste des lecteurs :')
+    print('-------------------------------')
+    b.affiche_lecteurs()
+    print('\n--- Liste des livres :')
+    print('-------------------------------')
+    b.affiche_livres()
+
+    # Quelques retours de livres
+    print('\n--- Quelques retours de livres :')
+    print('-------------------------------')
+    b.retour_livre(1,101)
+    b.retour_livre(1,102)
+    b.retour_livre(3,104)
+    b.retour_livre(10,108)
+
+    # Affichage des emprunts, des lecteurs et des livres
+    print('\n--- Liste des emprunts :')
+    print('-------------------------------')
+    b.affiche_emprunts()
+    print('\n--- Liste des lecteurs :')
+    print('-------------------------------')
+    b.affiche_lecteurs()
+    print('\n--- Liste des livres :')
+    print('-------------------------------')
+    b.affiche_livres()
+
+    # Suppression de quelques livres
+    rep = b.retrait_livre(101)
+    if not rep:
+        print('Retrait du livre impossible')
+    else:
+        print('Retrait du livre effectue')
+
+    b.retour_livre(2,101)
+
+    rep = b.retrait_livre(101)
+    if not rep:
+        print('Retrait du livre impossible')
+    else:
+        print('Retrait du livre effectue')
+
+    # Suppression de quelques lecteurs
+    rep = b.retrait_lecteur(1)
+    if not rep:
+        print('Retrait du lecteur impossible')
+    else:
+        print('Retrait du lecteur effectue')
+
+    b.retour_livre(1,104)
+
+    rep = b.retrait_lecteur(1)
+    if not rep:
+        print('Retrait du lecteur impossible')
+    else:
+        print('Retrait du lecteur effectue')
+
+    # Affichage final
+    print('\n--- Liste des emprunts :')
+    print('-------------------------------')
+    b.affiche_emprunts()
+    print('\n--- Liste des lecteurs :')
+    print('-------------------------------')
+    b.affiche_lecteurs()
+    print('\n--- Liste des livres :')
+    print('-------------------------------')
+    b.affiche_livres()
