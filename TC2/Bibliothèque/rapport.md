@@ -201,4 +201,4 @@ def _trouver_bibliothecaire(self, numero):
 
 -Conformément à l'interface attendue par le programme principal, les méthodes `retrait_bibliothecaire`, `retrait_lecteur` et `retrait_livre` retournent un booléen (`True`/`False`) plutôt que de lever une exception.
 
--**Méthode privée de recherche.** Le pattern `_trouver_*(numero)` est systématiquement utilisé en interne dans `Bibliotheque` pour toutes les collections (lecteurs, livres, bibliothécaires).
+-Le pattern `_trouver_*(numero)` est systématiquement utilisé en interne dans `Bibliotheque` pour toutes les collections (lecteurs, livres, bibliothécaires).
