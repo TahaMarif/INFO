@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 """
-Gestion d'une bibliothèque en Python — Programmation Orientée Objet
-Toutes les classes et le programme principal sont réunis dans ce fichier.
-"""
+Auteur : Marif Taha 
+Projet : POO - Bibliothèque. INFO TC2 - ECOLE CENTRALE DE LYON
 
+"""
 from datetime import date
 
 
