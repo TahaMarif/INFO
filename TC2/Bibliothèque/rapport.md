@@ -114,7 +114,7 @@ La dernière partie du TD porte sur la gestion des **bibliothécaires** et du **
 
 ### Classe `Bibliothecaire`
 
-La classe `Bibliothecaire` est simple : elle encapsule trois attributs privés (`_nom`, `_prenom`, `_numero`) exposés en lecture seule via des propriétés Python (`@property`).
+La classe `Bibliothecaire` est simple : elle conserve trois attributs privés (`_nom`, `_prenom`, `_numero`) exposés en lecture seule via des propriétés Python (`@property`).
 
 ```python
 class Bibliothecaire:
@@ -141,14 +141,14 @@ class Bibliothecaire:
 
 ### Classe `Conservateur` (héritage)
 
-`Conservateur` hérite de `Bibliothecaire` via `super().__init__()`. Il ne possède pas d'attributs supplémentaires mais représente un rôle distinct (direction de la bibliothèque). Une bibliothèque n'a qu'un seul conservateur (cardinalité 0..1).
+`Conservateur` hérite de `Bibliothecaire` via `Bibliothecaire.__init__()`. Il ne possède pas d'attributs supplémentaires mais représente un rôle distinct (direction de la bibliothèque). Une bibliothèque n'a qu'un seul conservateur (cardinalité 0..1).
 
 ```python
 from bibliothecaire import Bibliothecaire
 
 class Conservateur(Bibliothecaire):
     def __init__(self, nom, prenom, numero):
-        super().__init__(nom, prenom, numero)
+        Bibliothecaire.__init__(self, nom, prenom, numero)
 
     def __str__(self):
         return f"Conservateur n°{self._numero} | {self._prenom} {self._nom}"
@@ -195,12 +195,10 @@ def _trouver_bibliothecaire(self, numero):
     return None
 ```
 
-### Points de conception notables
+### Points de conception
 
-**Conservateur optionnel.** L'attribut `_conservateur` est initialisé à `None` dans le constructeur de `Bibliotheque` et peut être assigné via un setter `@conservateur.setter`. Cela permet de créer une bibliothèque sans conservateur désigné, ou de le changer en cours de vie de l'objet.
+-L'attribut `_conservateur` est initialisé à `None` dans le constructeur de `Bibliotheque` et peut être assigné via un setter `@conservateur.setter`. Cela permet de créer une bibliothèque sans conservateur désigné, ou de le changer en cours de vie de l'objet.
 
-**Pas d'exception, mais des valeurs de retour.** Conformément à l'interface attendue par le programme principal, les méthodes `retrait_bibliothecaire`, `retrait_lecteur` et `retrait_livre` retournent un booléen (`True`/`False`) plutôt que de lever une exception. Le programme principal peut ainsi tester la valeur de retour sans bloc `try/except`.
+-Conformément à l'interface attendue par le programme principal, les méthodes `retrait_bibliothecaire`, `retrait_lecteur` et `retrait_livre` retournent un booléen (`True`/`False`) plutôt que de lever une exception.
 
-**Héritage et polymorphisme.** `Conservateur` surcharge uniquement `__str__` pour afficher son rôle distinct. Toutes les autres méthodes héritées de `Bibliothecaire` (accès aux propriétés `nom`, `prenom`, `numero`) restent disponibles sans redéfinition.
-
-**Méthode privée de recherche.** Le pattern `_trouver_*(numero)` est systématiquement utilisé en interne dans `Bibliotheque` pour toutes les collections (lecteurs, livres, bibliothécaires). Cela centralise la logique de parcours et évite la duplication de code dans les méthodes publiques.
+-**Méthode privée de recherche.** Le pattern `_trouver_*(numero)` est systématiquement utilisé en interne dans `Bibliotheque` pour toutes les collections (lecteurs, livres, bibliothécaires).
